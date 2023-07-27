@@ -33,7 +33,7 @@ export default component$(() => {
   ];
 
   return (
-    <section class="math py-3">
+    <section class="py-3">
       <div class="container mx-auto">
         <h1 class="text-3xl text-center mb-4">Some math util</h1>
       

@@ -1,0 +1,1 @@
+export type { IApiResult } from './api-result.interface';
