@@ -1,0 +1,1 @@
+export const apiTimeUrl = 'https://timeapi.io/api/Time/current/coordinate';

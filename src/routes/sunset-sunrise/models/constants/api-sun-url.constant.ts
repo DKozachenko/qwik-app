@@ -1,0 +1,1 @@
+export const apiSunUrl = 'https://api.sunrise-sunset.org';

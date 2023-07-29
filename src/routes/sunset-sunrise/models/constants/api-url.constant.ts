@@ -1,1 +1,0 @@
-export const apiUrl = 'https://api.sunrise-sunset.org';

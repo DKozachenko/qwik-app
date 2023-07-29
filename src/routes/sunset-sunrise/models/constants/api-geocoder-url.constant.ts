@@ -1,0 +1,1 @@
+export const apiGeocoderUrl = 'https://geocode.maps.co';

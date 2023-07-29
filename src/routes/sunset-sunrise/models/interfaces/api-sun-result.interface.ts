@@ -1,4 +1,4 @@
-export interface IApiResult {
+export interface IApiSunResult {
   results: {
     sunrise: string,
     sunset: string,
