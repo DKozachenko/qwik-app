@@ -1,4 +1,3 @@
-import { component$, useSignal, useVisibleTask$, $ } from "@builder.io/qwik";
 import Map from "ol/Map";
 import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
@@ -6,68 +5,22 @@ import XYZ from "ol/source/XYZ";
 import * as olProj from "ol/proj";
 import { MapBrowserEvent } from "ol";
 import { Coordinate } from "ol/coordinate";
+import { component$, useSignal, useVisibleTask$, $ } from "@builder.io/qwik";
 import { routeAction$ } from "@builder.io/qwik-city";
-import { apiGeocoderUrl, apiSunUrl, apiTimeUrl, coordinatesKey, zoomKey } from "./models/constants";
-import {
-  IApiGeocoderResult,
-  IApiSunResult,
-  IApiTimeResult,
-} from "./models/interfaces";
+import { coordinatesKey, zoomKey } from "./models/constants";
 import { LuMapPin, LuSunset, LuCopy, LuSunrise, LuGlobe } from "@qwikest/icons/lucide";
-import { formatInTimeZone } from 'date-fns-tz';
+import { getFormattedLocalTime } from './utils';
+import { geocoderHook, sunHook, timeHook } from "./hooks";
 
-const useSunResult = routeAction$(async (data: any) => {
-  const coordinates: Coordinate = data as Coordinate;
-
-  const url: string = `${apiSunUrl}/json?lat=${coordinates[1]}&lng=${coordinates[0]}`;
-  const response = await fetch(url);
-  const result: any = await response.json();
-  return result as IApiSunResult;
-});
-
-const useGeocoderResult = routeAction$(async (data: any) => {
-  const coordinates: Coordinate = data as Coordinate;
-
-  const url: string = `${apiGeocoderUrl}/reverse?lat=${coordinates[1].toFixed(4)}&lon=${coordinates[0].toFixed(4)}`;
-  const response = await fetch(url);
-  const result: any = await response.json();
-  return result as IApiGeocoderResult;
-});
-
-const useTimeResult = routeAction$(async (data: any) => {
-  const coordinates: Coordinate = data as Coordinate;
-
-  const url: string = `${apiTimeUrl}/?latitude=${coordinates[1].toFixed(4)}&longitude=${coordinates[0].toFixed(4)}`;
-  const response = await fetch(url);
-  const result: any = await response.json();
-  return result as IApiTimeResult;
-});
+const useSunResult = routeAction$(sunHook);
+const useGeocoderResult = routeAction$(geocoderHook);
+const useTimeResult = routeAction$(timeHook);
 
 export default component$(() => {
   const currentCoordinates = useSignal<Coordinate | null>(null);
   const sunResult = useSunResult();
   const geocoderResult = useGeocoderResult();
   const timeResult = useTimeResult();
-
-  const getFormattedLocalTime = (utcTime: string, timezoneName: string) => {
-    const regex: RegExp = /(\d+):(\d+):(\d+) (AM|PM)/;
-    const groups: RegExpExecArray | null = regex.exec(utcTime);
-    
-    let hours: number = +(groups?.[1] ?? 0);
-    if (groups?.[4] === "PM" && hours < 12) {
-      hours += 12;
-    }
-    if (groups?.[4] === "AM" && hours == 12) {
-      hours -= 12;
-    }
-
-    const minutes: number = +(groups?.[2] ?? 0);
-    const seconds: number = +(groups?.[3] ?? 0);
-
-    const fakeDate: Date = new Date(Date.UTC(1970, 0, 1, hours, minutes, seconds));
-
-    return formatInTimeZone(fakeDate, timezoneName, 'HH:mm:ss (XXX)');
-  }
 
   const copy = $(async () => {
     await navigator.clipboard.writeText(`${currentCoordinates.value?.[1].toFixed(6)},${currentCoordinates.value?.[0].toFixed(6)}`);
