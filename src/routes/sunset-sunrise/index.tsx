@@ -7,7 +7,7 @@ import * as olProj from "ol/proj";
 import { MapBrowserEvent } from "ol";
 import { Coordinate } from "ol/coordinate";
 import { routeAction$ } from "@builder.io/qwik-city";
-import { apiGeocoderUrl, apiSunUrl, apiTimeUrl } from "./models/constants";
+import { apiGeocoderUrl, apiSunUrl, apiTimeUrl, coordinatesKey, zoomKey } from "./models/constants";
 import {
   IApiGeocoderResult,
   IApiSunResult,
@@ -74,7 +74,14 @@ export default component$(() => {
   });
 
   useVisibleTask$(() => {
-    const map = new Map({
+    const lastCoordinates: Coordinate | undefined = localStorage.getItem(coordinatesKey) 
+      ? JSON.parse(localStorage.getItem(coordinatesKey) ?? '')
+      : undefined;
+    const lastZoom: number | undefined = localStorage.getItem(zoomKey) 
+      ? JSON.parse(localStorage.getItem(zoomKey) ?? '')
+      : undefined;
+
+    const map: Map = new Map({
       target: "map",
       layers: [
         new TileLayer({
@@ -84,8 +91,8 @@ export default component$(() => {
         }),
       ],
       view: new View({
-        center: olProj.fromLonLat([37.6156, 55.7522]),
-        zoom: 5,
+        center: olProj.fromLonLat(lastCoordinates ?? [37.6156, 55.7522]),
+        zoom: lastZoom ?? 5,
       }),
     });
 
@@ -96,33 +103,40 @@ export default component$(() => {
         +currentCoordinates.value[0].toFixed(7),
         +currentCoordinates.value[1].toFixed(7),
       ];
+
+      const zoom: number = map.getView().getZoom() as number;
+      localStorage.setItem(coordinatesKey, JSON.stringify(coordinates));
+      localStorage.setItem(zoomKey, zoom.toString());
       await sunResult.submit(requestCoordinates);
       await geocoderResult.submit(requestCoordinates);
       await timeResult.submit(requestCoordinates);
     });
   });
 
-
-
   return (
     <section class="relative">
       <div id="map" class="w-100" style="height: calc(100vh - 77px)"></div>
 
-      <div style="transform: translateX(-50%)" class="absolute top-0 left-1/2 p-2 bg-white w-1/2 h-48 overflow-x-auto">
+      <div style="transform: translateX(-50%)" class="absolute top-0 left-1/2 p-2 bg-white w-1/2 h-48 overflow-x-auto flex items-center">
         <div class="flex flex-col gap-4">
-          { currentCoordinates.value && (
-            <p class="flex items-center gap-3">
-              <LuMapPin class="text-2xl" />
+          { currentCoordinates.value 
+            ? (
+              <p class="flex items-center gap-3">
+                <LuMapPin class="text-2xl" />
 
-              <span>
-                { currentCoordinates.value?.[1].toFixed(6)},{" "}
-                { currentCoordinates.value?.[0].toFixed(6)}
-              </span>
+                <span>
+                  { currentCoordinates.value?.[1].toFixed(6)},{" "}
+                  { currentCoordinates.value?.[0].toFixed(6)}
+                </span>
 
-              <LuCopy class="text-3xl border border-black rounded p-1 transition-colors duration-300 ease-in-out hover:cursor-pointer hover:bg-amber-200 active:bg-amber-500"
-              onClick$={copy} />
-            </p>
-          )}
+                <LuCopy class="text-3xl border border-black rounded p-1 transition-colors duration-300 ease-in-out hover:cursor-pointer hover:bg-amber-200 active:bg-amber-500"
+                onClick$={copy} />
+              </p>
+            )
+          : (
+              <p>Click to see information</p>
+            )
+        }
 
           { sunResult.value && geocoderResult.value && timeResult.value && (
             <>
