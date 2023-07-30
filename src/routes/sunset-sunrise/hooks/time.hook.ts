@@ -1,7 +1,7 @@
 import { Coordinate } from "ol/coordinate";
 import { apiTimeUrl } from "../models/constants";
 import { IApiTimeResult } from "../models/interfaces";
-import { baseHook } from "./base.hook";
+import { baseHook } from "~/hooks";
 
 export const timeHook = async (data: any) => {
   const coordinates: Coordinate = data as Coordinate;

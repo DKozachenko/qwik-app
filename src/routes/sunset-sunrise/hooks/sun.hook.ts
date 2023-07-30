@@ -1,7 +1,7 @@
 import { Coordinate } from "ol/coordinate";
 import { IApiSunResult } from "../models/interfaces";
 import { apiSunUrl } from "../models/constants";
-import { baseHook } from "./base.hook";
+import { baseHook } from "~/hooks";
 
 export const sunHook = async (data: any) => {
   const coordinates: Coordinate = data as Coordinate;

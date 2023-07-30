@@ -1,0 +1,1 @@
+export { baseHook } from './base.hook';

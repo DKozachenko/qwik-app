@@ -1,7 +1,7 @@
 import { Coordinate } from "ol/coordinate";
 import { apiGeocoderUrl } from "../models/constants";
 import { IApiGeocoderResult } from "../models/interfaces";
-import { baseHook } from "./base.hook";
+import { baseHook } from "~/hooks";
 
 export const geocoderHook = async (data: any) => {
   const coordinates: Coordinate = data as Coordinate;

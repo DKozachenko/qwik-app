@@ -1,0 +1,1 @@
+export { Meme } from './meme/meme.component';

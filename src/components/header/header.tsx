@@ -15,9 +15,9 @@ export const Header = component$(() => {
             <LuSun />
             Sunset and sunrise
           </Link>
-          <Link href="/satellities" class="nav__link border-2 border-amber-500 p-2 rounded-xl inline-block hover:bg-amber-500 transition-colors flex items-center gap-1">
+          <Link href="/memes" class="nav__link border-2 border-amber-500 p-2 rounded-xl inline-block hover:bg-amber-500 transition-colors flex items-center gap-1">
             <LuRocket />
-            Satellites
+            Memes
           </Link>
         </nav>
       </div>
