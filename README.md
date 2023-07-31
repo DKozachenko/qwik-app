@@ -6,6 +6,7 @@
 * [Qwik](https://qwik.builder.io/)
 * [Tailwind](https://tailwindui.com/)
 * [Icons](https://lucide.dev/)
+* [Open Layers](https://openlayers.org/)
 
 ### Used API's
 
