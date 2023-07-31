@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "@qwikest/icons": "^0.0.8",
-    "@turf/turf": "^6.5.0",
     "date-fns-tz": "^2.0.0",
     "ol": "^7.4.0"
   }
