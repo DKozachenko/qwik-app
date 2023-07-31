@@ -3,6 +3,7 @@ import { apiGeocoderUrl } from "../models/constants";
 import { IApiGeocoderResult } from "../models/interfaces";
 import { baseHook } from "~/hooks";
 
+/** Хук на получение гео-данных */
 export const geocoderHook = async (data: any) => {
   const coordinates: Coordinate = data as Coordinate;
 

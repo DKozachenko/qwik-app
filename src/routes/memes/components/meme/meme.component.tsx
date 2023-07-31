@@ -1,6 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { IMeme } from "../../models/interfaces";
 
+/** Компонент мема */
 export const Meme = component$<{ meme: IMeme }>(({ meme }) => {
   return (
     <div class="border border-black p-2">

@@ -1,6 +1,10 @@
+/** Ответ от API c восходом и закатом */
 export interface IApiSunResult {
+  /** Результат */
   results: {
+    /** Восход */
     sunrise: string,
+    /** Закат */
     sunset: string,
     solar_noon: string,
     day_length: string,
@@ -11,5 +15,6 @@ export interface IApiSunResult {
     astronomical_twilight_begin: string,
     astronomical_twilight_end: string
   },
+  /** Статус */
   status: string
 }

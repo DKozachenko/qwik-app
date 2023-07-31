@@ -3,6 +3,7 @@ import { apiTimeUrl } from "../models/constants";
 import { IApiTimeResult } from "../models/interfaces";
 import { baseHook } from "~/hooks";
 
+/** Хук на получение данных о таймзоне */
 export const timeHook = async (data: any) => {
   const coordinates: Coordinate = data as Coordinate;
 

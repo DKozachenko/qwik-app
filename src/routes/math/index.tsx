@@ -3,6 +3,7 @@ import { Form, routeAction$ } from "@builder.io/qwik-city";
 import { IMathForm, IApiResult, IOperationLabel } from "./models/interfaces";
 import { apiUrl } from "./models/constants";
 
+/** Экшн на получение результата с API */
 const useMathResult = routeAction$(async (data: any) => {
   const formData: IMathForm = data as IMathForm;
   
@@ -14,6 +15,8 @@ const useMathResult = routeAction$(async (data: any) => {
 
 export default component$(() => {
   const action = useMathResult();
+  
+  /** Подписи к операциям */
   const operationLabels: IOperationLabel[] = [
     { label: 'Simplify', value: 'simplify' },
     { label: 'Factor', value: 'factor' },

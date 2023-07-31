@@ -12,16 +12,22 @@ import { LuMapPin, LuSunset, LuCopy, LuSunrise, LuGlobe } from "@qwikest/icons/l
 import { getFormattedLocalTime } from './utils';
 import { geocoderHook, sunHook, timeHook } from "./hooks";
 
+/** Экшн на получение данных о восходе и закате */
 const useSunResult = routeAction$(sunHook);
+/** Экшн на получение гео-данных */
 const useGeocoderResult = routeAction$(geocoderHook);
+/** Экшн на получение данных о таймзоне */
 const useTimeResult = routeAction$(timeHook);
 
 export default component$(() => {
+  /** Текущие координаты */
   const currentCoordinates = useSignal<Coordinate | null>(null);
+  
   const sunResult = useSunResult();
   const geocoderResult = useGeocoderResult();
   const timeResult = useTimeResult();
 
+  /** Копирование текущих координат */
   const copy = $(async () => {
     await navigator.clipboard.writeText(`${currentCoordinates.value?.[1].toFixed(6)},${currentCoordinates.value?.[0].toFixed(6)}`);
   });

@@ -4,6 +4,7 @@ import { memesHook } from "./hooks/memes.hook";
 import { IMeme } from "./models/interfaces";
 import { Meme } from "./components";
 
+/** Лоадер на получение всех мемов */
 export const useMemesLoader = routeLoader$(memesHook);
 
 export default component$(() => {

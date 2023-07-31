@@ -1,5 +1,6 @@
 import { formatInTimeZone } from "date-fns-tz";
 
+/** Получение локального времени в формате HH:mm:ss (XXX), где (ХХХ) смещение по UTC */
 export const getFormattedLocalTime = (utcTime: string, timezoneName: string) => {
   const regex: RegExp = /(\d+):(\d+):(\d+) (AM|PM)/;
   const groups: RegExpExecArray | null = regex.exec(utcTime);

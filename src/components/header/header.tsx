@@ -2,6 +2,7 @@ import { component$ } from "@builder.io/qwik";
 import { Link } from '@builder.io/qwik-city';
 import { LuSigma, LuSun, LuRocket } from "@qwikest/icons/lucide";
 
+/** Компонент шапки */
 export const Header = component$(() => {
   return (
     <header class="header py-4 border-b bg-amber-200">
