@@ -17,21 +17,21 @@
 
 ### Разработка в режиме разработки
 
-`
+```
 npm i  
 npm run start
-`
+```
 
 ### Сборка в режиме разработке
 
-`
+```
 npm i  
 npm run build
-`
+```
 
 ### Сборка в режиме production 
 
-`
+```
 npm i  
 npm run preview
-`
+```
